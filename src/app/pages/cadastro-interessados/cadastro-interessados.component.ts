@@ -13,9 +13,13 @@ import localePt from '@angular/common/locales/pt';
 import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
 import { Moment } from 'moment';
 import moment from 'moment';
+import 'moment/locale/pt-br';
 
 // Registrar o locale pt-BR
 registerLocaleData(localePt);
+
+// Configurar o locale do moment
+moment.locale('pt-br');
 
 // Configurar o formato de data
 export const MY_DATE_FORMATS = {

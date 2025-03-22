@@ -37,3 +37,121 @@ textarea {
   min-height: 100px;
 }
 
+/* Estilos para o campo de data */
+::ng-deep .mat-mdc-form-field {
+  width: 100%;
+  max-width: 100%;
+}
+
+::ng-deep .mat-mdc-form-field-flex {
+  background-color: white;
+}
+
+::ng-deep .mat-mdc-text-field-wrapper {
+  padding: 0 !important;
+  background-color: white !important;
+  border-radius: 5px !important;
+  border: 1px solid #ced4da !important;
+  box-shadow: none !important;
+}
+
+::ng-deep .mat-mdc-text-field-wrapper:focus-within {
+  border-color: #80bdff !important;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25) !important;
+}
+
+::ng-deep .mat-mdc-form-field-infix {
+  padding: 0.75rem !important;
+  border-top: none !important;
+  background-color: white !important;
+}
+
+::ng-deep .mat-mdc-form-field-subscript-wrapper {
+  margin-top: 0 !important;
+  padding: 0 !important;
+}
+
+::ng-deep .mat-mdc-form-field-bottom-align {
+  padding-top: 0 !important;
+}
+
+::ng-deep .mat-mdc-form-field-outline {
+  display: none !important;
+}
+
+::ng-deep .mat-mdc-form-field-subscript-wrapper {
+  display: none !important;
+}
+
+::ng-deep .mat-mdc-form-field-underline {
+  display: none !important;
+}
+
+::ng-deep .mat-mdc-form-field-infix {
+  border-top: none !important;
+  padding-top: 0.75rem !important;
+  padding-bottom: 0.75rem !important;
+}
+
+/* Estilos para o calendário */
+::ng-deep .mat-calendar {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+::ng-deep .mat-calendar-header {
+  background-color: #f8f9fa;
+  border-radius: 8px 8px 0 0;
+  padding: 8px;
+}
+
+::ng-deep .mat-calendar-body {
+  padding: 8px;
+}
+
+::ng-deep .mat-calendar-body-cell {
+  border-radius: 50%;
+  margin: 2px;
+}
+
+::ng-deep .mat-calendar-body-cell:not(.mat-calendar-body-disabled):hover > .mat-calendar-body-cell-content:not(.mat-calendar-body-selected):not(.mat-calendar-body-comparison-identical) {
+  background-color: #e9ecef;
+}
+
+::ng-deep .mat-calendar-body-selected {
+  background-color: #0d6efd;
+  color: white;
+}
+
+::ng-deep .mat-calendar-body-today:not(.mat-calendar-body-selected) {
+  border-color: #0d6efd;
+}
+
+::ng-deep .mat-calendar-body-disabled {
+  background-color: #f8f9fa;
+  color: #adb5bd;
+}
+
+::ng-deep .mat-calendar-body-cell-content {
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  line-height: 36px;
+  text-align: center;
+}
+
+::ng-deep .mat-calendar-body-label {
+  color: #495057;
+  font-weight: 500;
+}
+
+::ng-deep .mat-calendar-period-button {
+  color: #212529;
+  font-weight: 500;
+}
+
+::ng-deep .mat-calendar-arrow {
+  fill: #212529;
+}
+

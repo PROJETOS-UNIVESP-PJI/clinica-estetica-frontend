@@ -75,7 +75,7 @@
                   [min]="minDate" [max]="maxDate" [matDatepickerFilter]="isWorkday"
                   placeholder="DD/MM/AAAA">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
+                <mat-datepicker #picker xPosition="end" yPosition="above" [startAt]="minDate"></mat-datepicker>
                 <mat-error *ngIf="cadastroForm.get('dataPreferida')?.invalid && cadastroForm.get('dataPreferida')?.touched">
                   Por favor, selecione uma data válida (segunda a sexta).
                 </mat-error>
