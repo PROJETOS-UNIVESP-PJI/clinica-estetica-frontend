@@ -15,6 +15,8 @@ import { Moment } from 'moment';
 import moment from 'moment';
 import 'moment/locale/pt-br';
 
+declare var bootstrap: any;
+
 // Registrar o locale pt-BR
 registerLocaleData(localePt);
 
@@ -135,8 +137,18 @@ export class CadastroInteressadosComponent implements OnInit {
   onSubmit() {
     if (this.cadastroForm.valid) {
       console.log('Dados do interessado:', this.cadastroForm.value);
-      alert('Cadastro realizado com sucesso!');
-      this.cadastroForm.reset();
+      
+      // Mostrar o modal de confirmação
+      const modal = new bootstrap.Modal(document.getElementById('modalConfirmacao'));
+      modal.show();
+      
+      // Limpar o formulário após o modal ser fechado
+      const modalElement = document.getElementById('modalConfirmacao');
+      if (modalElement) {
+        modalElement.addEventListener('hidden.bs.modal', () => {
+          this.cadastroForm.reset();
+        });
+      }
     }
   }
 

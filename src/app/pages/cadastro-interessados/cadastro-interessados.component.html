@@ -41,16 +41,13 @@
 
             <div class="mb-3">
               <label for="tipoServico" class="form-label">Tipo de Serviço</label>
-              <select class="form-select" id="tipoServico" formControlName="tipoServico"
-                [class.is-invalid]="cadastroForm.get('tipoServico')?.invalid && cadastroForm.get('tipoServico')?.touched">
-                <option value="">Selecione...</option>
+              <select class="form-select" id="tipoServico" formControlName="tipoServico">
+                <option value="">Selecione o tipo de serviço</option>
                 <option value="agendamento">Agendamento</option>
-                <option value="duvida">Dúvida</option>
                 <option value="orcamento">Orçamento</option>
-                <option value="outro">Outro</option>
               </select>
-              <div class="invalid-feedback">
-                Por favor, selecione um tipo de serviço.
+              <div class="invalid-feedback" *ngIf="cadastroForm.get('tipoServico')?.invalid && cadastroForm.get('tipoServico')?.touched">
+                Por favor, selecione o tipo de serviço.
               </div>
             </div>
 
@@ -109,6 +106,45 @@
             </div>
           </form>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Confirmação -->
+<div class="modal fade" id="modalConfirmacao" tabindex="-1" aria-labelledby="modalConfirmacaoLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalConfirmacaoLabel">
+          {{cadastroForm.get('tipoServico')?.value === 'agendamento' ? 'Agendamento Confirmado!' : 'Orçamento Solicitado!'}}
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p *ngIf="cadastroForm.get('tipoServico')?.value === 'agendamento'">
+          Seu agendamento foi registrado com sucesso!
+        </p>
+        <p *ngIf="cadastroForm.get('tipoServico')?.value === 'orcamento'">
+          Seu orçamento foi solicitado com sucesso!
+        </p>
+        <p><strong>Nome:</strong> {{cadastroForm.get('nome')?.value}}</p>
+        <p><strong>Serviço:</strong> {{cadastroForm.get('servicoDesejado')?.value}}</p>
+        <p *ngIf="cadastroForm.get('tipoServico')?.value === 'agendamento'">
+          <strong>Data:</strong> {{cadastroForm.get('dataPreferida')?.value | date:'dd/MM/yyyy'}}
+        </p>
+        <p *ngIf="cadastroForm.get('tipoServico')?.value === 'agendamento'">
+          <strong>Horário:</strong> {{cadastroForm.get('horarioPreferido')?.value}}
+        </p>
+        <p *ngIf="cadastroForm.get('tipoServico')?.value === 'agendamento'">
+          A clínica entrará em contato um dia antes para confirmar sua presença.
+        </p>
+        <p *ngIf="cadastroForm.get('tipoServico')?.value === 'orcamento'">
+          Nossa equipe entrará em contato em breve para fornecer o orçamento detalhado.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
       </div>
     </div>
   </div>
