@@ -1,0 +1,65 @@
+<!-- Hero Section -->
+<section class="hero bg-primary text-white py-5">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6">
+        <h1 class="display-4 fw-bold mb-4">Transforme sua beleza natural</h1>
+        <p class="lead mb-4">Descubra tratamentos personalizados que realçam sua beleza natural e restauram sua confiança.</p>
+        <a routerLink="/cadastro" class="btn btn-light btn-lg">Agende sua consulta</a>
+      </div>
+      <div class="col-lg-6">
+        <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+             alt="Clínica de Estética" 
+             class="img-fluid rounded shadow">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Serviços Section -->
+<section class="py-5">
+  <div class="container">
+    <h2 class="text-center mb-5">Nossos Serviços</h2>
+    <div class="row g-4">
+      <div class="col-md-4" *ngFor="let servico of servicos">
+        <div class="card h-100 shadow-sm">
+          <img [src]="servico.imagem" class="card-img-top" [alt]="servico.titulo">
+          <div class="card-body">
+            <h5 class="card-title">{{servico.titulo}}</h5>
+            <p class="card-text">{{servico.descricao}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Depoimentos Section -->
+<section class="bg-light py-5">
+  <div class="container">
+    <h2 class="text-center mb-5">O que dizem nossos clientes</h2>
+    <div class="row g-4">
+      <div class="col-md-4" *ngFor="let depoimento of depoimentos">
+        <div class="card h-100 border-0 shadow-sm">
+          <div class="card-body text-center">
+            <img [src]="depoimento.imagem" 
+                 class="rounded-circle mb-3" 
+                 [alt]="depoimento.nome"
+                 style="width: 100px; height: 100px; object-fit: cover;">
+            <p class="card-text">{{depoimento.texto}}</p>
+            <h5 class="card-title">{{depoimento.nome}}</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-5">
+  <div class="container text-center">
+    <h2 class="mb-4">Pronto para transformar sua beleza?</h2>
+    <p class="lead mb-4">Agende sua consulta e descubra como podemos ajudar você a alcançar seus objetivos estéticos.</p>
+    <a routerLink="/cadastro" class="btn btn-primary btn-lg">Agende Agora</a>
+  </div>
+</section>
