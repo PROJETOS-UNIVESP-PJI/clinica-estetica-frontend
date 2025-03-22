@@ -52,7 +52,7 @@
             </div>
 
             <div class="mb-3">
-              <label for="servicoDesejado" class="form-label">Serviço Desejado</label>
+              <label for="servicoDesejado" class="form-label">Procedimento Desejado</label>
               <select class="form-select" id="servicoDesejado" formControlName="servicoDesejado"
                 [class.is-invalid]="cadastroForm.get('servicoDesejado')?.invalid && cadastroForm.get('servicoDesejado')?.touched">
                 <option value="">Selecione...</option>
@@ -61,7 +61,7 @@
                 </option>
               </select>
               <div class="invalid-feedback">
-                Por favor, selecione um serviço.
+                Por favor, selecione um procedimento.
               </div>
             </div>
 
@@ -129,7 +129,7 @@
           Seu orçamento foi solicitado com sucesso!
         </p>
         <p><strong>Nome:</strong> {{cadastroForm.get('nome')?.value}}</p>
-        <p><strong>Serviço:</strong> {{cadastroForm.get('servicoDesejado')?.value}}</p>
+        <p><strong>Procedimento:</strong> {{cadastroForm.get('servicoDesejado')?.value}}</p>
         <p *ngIf="cadastroForm.get('tipoServico')?.value === 'agendamento'">
           <strong>Data:</strong> {{cadastroForm.get('dataPreferida')?.value | date:'dd/MM/yyyy'}}
         </p>
