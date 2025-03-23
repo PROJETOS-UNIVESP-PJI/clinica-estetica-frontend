@@ -47,6 +47,10 @@ interface Servico {
   enumValue: ProcedureType;
 }
 
+interface HorarioOcupado {
+  scheduleHours: string;
+}
+
 @Component({
   selector: 'app-cadastro-interessados',
   standalone: true,
@@ -102,6 +106,8 @@ export class CadastroInteressadosComponent implements OnInit {
     }
   ];
   horarios: string[] = [];
+  horariosOcupados: string[] = [];
+  horariosDisponiveis: string[] = [];
   minDate: Moment = moment();
   maxDate: Moment;
 
@@ -145,9 +151,35 @@ export class CadastroInteressadosComponent implements OnInit {
       this.cadastroForm.get('horarioPreferido')?.updateValueAndValidity();
     });
 
-    // Atualizar validação do horário quando a data mudar
-    this.cadastroForm.get('dataPreferida')?.valueChanges.subscribe(() => {
-      this.cadastroForm.get('horarioPreferido')?.updateValueAndValidity();
+    // Observar mudanças na data
+    this.cadastroForm.get('dataPreferida')?.valueChanges.subscribe((data: Moment) => {
+      if (data) {
+        // Formatar a data para o formato esperado pela API (YYYY-MM-DD)
+        const dataFormatada = data.format('YYYY-MM-DD');
+        
+        // Buscar horários ocupados
+        this.agendamentoService.getHorariosOcupados(dataFormatada).subscribe({
+          next: (horariosOcupados) => {
+            // Extrair apenas os horários dos objetos recebidos
+            this.horariosOcupados = horariosOcupados.map((ocupado: any) => ocupado.scheduleHours);
+            
+            // Filtrar horários disponíveis
+            this.horariosDisponiveis = this.horarios.filter(horario => 
+              !this.horariosOcupados.includes(horario)
+            );
+            
+            // Limpar o horário selecionado quando a data mudar
+            this.cadastroForm.get('horarioPreferido')?.setValue('');
+          },
+          error: (error) => {
+            this.mostrarErro('Erro ao buscar horários disponíveis. Por favor, tente novamente.');
+          }
+        });
+      } else {
+        // Resetar horários disponíveis quando não houver data selecionada
+        this.horariosDisponiveis = [];
+        this.cadastroForm.get('horarioPreferido')?.setValue('');
+      }
     });
   }
 
@@ -250,5 +282,10 @@ export class CadastroInteressadosComponent implements OnInit {
     }
     
     this.cadastroForm.patchValue({ telefone: valor });
+  }
+
+  // Método para verificar se um horário está disponível
+  isHorarioDisponivel(horario: string): boolean {
+    return !this.horariosOcupados.includes(horario);
   }
 }

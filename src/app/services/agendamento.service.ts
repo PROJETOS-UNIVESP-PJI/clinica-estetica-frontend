@@ -43,4 +43,8 @@ export class AgendamentoService {
   criarOrcamento(orcamento: OrcamentoRequest): Observable<any> {
     return this.http.post(`${this.apiUrl}/budget`, orcamento);
   }
+
+  getHorariosOcupados(data: string): Observable<string[]> {
+    return this.http.get<string[]>(`${this.apiUrl}/scheduling/hours/${data}`);
+  }
 } 

@@ -85,12 +85,12 @@
               <select class="form-select" id="horarioPreferido" formControlName="horarioPreferido"
                 [class.is-invalid]="cadastroForm.get('horarioPreferido')?.invalid && cadastroForm.get('horarioPreferido')?.touched">
                 <option value="">Selecione...</option>
-                <option *ngFor="let horario of horarios" [value]="horario">
+                <option *ngFor="let horario of horariosDisponiveis" [value]="horario">
                   {{horario}}
                 </option>
               </select>
               <div class="invalid-feedback">
-                Por favor, selecione um horário.
+                Por favor, selecione um horário disponível.
               </div>
             </div>
 
