@@ -14,6 +14,10 @@ import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
 import { Moment } from 'moment';
 import moment from 'moment';
 import 'moment/locale/pt-br';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+import { AgendamentoService, AgendamentoRequest, OrcamentoRequest, ProcedureType } from '../../services/agendamento.service';
 
 declare var bootstrap: any;
 
@@ -40,6 +44,7 @@ interface Servico {
   titulo: string;
   descricao: string;
   imagem: string;
+  enumValue: ProcedureType;
 }
 
 @Component({
@@ -67,43 +72,50 @@ export class CadastroInteressadosComponent implements OnInit {
   servicos: Servico[] = [
     {
       titulo: 'Limpeza de Pele',
-      descricao: 'Tratamento profissional para remover impurezas e revitalizar sua pele.',
-      imagem: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80'
+      descricao: 'Limpeza de pele profissional',
+      imagem: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
+      enumValue: ProcedureType.LIMPEZA_PELE
     },
     {
       titulo: 'Botox',
-      descricao: 'Tratamento seguro e eficaz para suavizar linhas de expressão.',
-      imagem: 'https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80'
+      descricao: 'Toxina botulínica para rugas',
+      imagem: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
+      enumValue: ProcedureType.BOTOX
     },
     {
       titulo: 'Preenchimento',
-      descricao: 'Recupere o volume natural do seu rosto com produtos de alta qualidade.',
-      imagem: 'https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80'
+      descricao: 'Preenchimento facial com ácido hialurônico',
+      imagem: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
+      enumValue: ProcedureType.PREENCHIMENTO
     },
     {
       titulo: 'Depilação a Laser',
-      descricao: 'Remoção definitiva de pelos com tecnologia de ponta.',
-      imagem: 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80'
+      descricao: 'Depilação a laser',
+      imagem: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
+      enumValue: ProcedureType.DEPILACAO_LASER
     },
     {
       titulo: 'Tratamento Capilar',
-      descricao: 'Recupere a saúde e beleza dos seus cabelos com tratamentos especializados.',
-      imagem: 'https://images.unsplash.com/photo-1595475884562-073c30d45670?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80'
+      descricao: 'Tratamentos para queda de cabelo',
+      imagem: 'https://images.unsplash.com/photo-1522338242992-e1a54906a8da?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
+      enumValue: ProcedureType.TRATAMENTO_CAPILAR
     }
   ];
   horarios: string[] = [];
-  minDate: Moment;
+  minDate: Moment = moment();
   maxDate: Moment;
 
-  constructor(private fb: FormBuilder) {
-    // Definir data mínima como hoje
-    this.minDate = moment();
-    
-    // Definir data máxima como 30 dias a partir de hoje
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar,
+    private agendamentoService: AgendamentoService
+  ) {
     this.maxDate = moment().add(30, 'days');
     
-    // Gerar horários das 8h às 17h
-    for (let hora = 8; hora <= 17; hora++) {
+    // Gerar horários das 9h às 18h
+    for (let hora = 9; hora <= 18; hora++) {
       this.horarios.push(`${hora.toString().padStart(2, '0')}:00`);
     }
   }
@@ -115,8 +127,8 @@ export class CadastroInteressadosComponent implements OnInit {
       telefone: ['', [Validators.required, Validators.pattern(/^\(\d{2}\) \d{5}-\d{4}$/)]],
       tipoServico: ['', Validators.required],
       servicoDesejado: ['', Validators.required],
-      dataPreferida: [''],
-      horarioPreferido: [''],
+      dataPreferida: ['', Validators.required],
+      horarioPreferido: ['', Validators.required],
       mensagem: ['']
     });
 
@@ -132,24 +144,83 @@ export class CadastroInteressadosComponent implements OnInit {
       this.cadastroForm.get('dataPreferida')?.updateValueAndValidity();
       this.cadastroForm.get('horarioPreferido')?.updateValueAndValidity();
     });
+
+    // Atualizar validação do horário quando a data mudar
+    this.cadastroForm.get('dataPreferida')?.valueChanges.subscribe(() => {
+      this.cadastroForm.get('horarioPreferido')?.updateValueAndValidity();
+    });
   }
 
   onSubmit() {
     if (this.cadastroForm.valid) {
-      console.log('Dados do interessado:', this.cadastroForm.value);
+      const formValue = this.cadastroForm.value;
       
-      // Mostrar o modal de confirmação
-      const modal = new bootstrap.Modal(document.getElementById('modalConfirmacao'));
-      modal.show();
+      // Encontrar o serviço selecionado
+      const servicoSelecionado = this.servicos.find(s => s.titulo === formValue.servicoDesejado);
       
-      // Limpar o formulário após o modal ser fechado
-      const modalElement = document.getElementById('modalConfirmacao');
-      if (modalElement) {
-        modalElement.addEventListener('hidden.bs.modal', () => {
-          this.cadastroForm.reset();
+      if (formValue.tipoServico === 'agendamento') {
+        // Preparar dados para a API de agendamento
+        const agendamentoRequest: AgendamentoRequest = {
+          name: formValue.nome,
+          email: formValue.email,
+          phone: formValue.telefone.replace(/\D/g, ''), // Remove formatação do telefone
+          procedureType: servicoSelecionado?.enumValue || ProcedureType.LIMPEZA_PELE,
+          scheduleDateTime: moment(formValue.dataPreferida).format('YYYY-MM-DD'),
+          scheduleHours: formValue.horarioPreferido,
+          message: formValue.mensagem || ''
+        };
+
+        // Chamar a API de agendamento
+        this.agendamentoService.criarAgendamento(agendamentoRequest).subscribe({
+          next: (response) => {
+            this.mostrarModalConfirmacao();
+          },
+          error: (error) => {
+            this.mostrarErro('Erro ao criar agendamento. Por favor, tente novamente.');
+          }
+        });
+      } else {
+        // Preparar dados para a API de orçamento
+        const orcamentoRequest: OrcamentoRequest = {
+          name: formValue.nome,
+          email: formValue.email,
+          phone: formValue.telefone.replace(/\D/g, ''), // Remove formatação do telefone
+          procedureType: servicoSelecionado?.enumValue || ProcedureType.LIMPEZA_PELE,
+          message: formValue.mensagem || ''
+        };
+
+        // Chamar a API de orçamento
+        this.agendamentoService.criarOrcamento(orcamentoRequest).subscribe({
+          next: (response) => {
+            this.mostrarModalConfirmacao();
+          },
+          error: (error) => {
+            this.mostrarErro('Erro ao solicitar orçamento. Por favor, tente novamente.');
+          }
         });
       }
     }
+  }
+
+  private mostrarModalConfirmacao() {
+    const modalElement = document.getElementById('modalConfirmacao');
+    if (modalElement) {
+      const modal = new bootstrap.Modal(modalElement);
+      modal.show();
+    }
+
+    // Limpar formulário após o modal ser fechado
+    modalElement?.addEventListener('hidden.bs.modal', () => {
+      this.cadastroForm.reset();
+    }, { once: true });
+  }
+
+  private mostrarErro(mensagem: string) {
+    this.snackBar.open(mensagem, 'Fechar', {
+      duration: 5000,
+      horizontalPosition: 'center',
+      verticalPosition: 'top'
+    });
   }
 
   // Função para verificar se a data é um dia útil (segunda a sexta)
@@ -162,15 +233,20 @@ export class CadastroInteressadosComponent implements OnInit {
   }
 
   // Função para formatar o telefone
-  formatarTelefone(event: any) {
-    let valor = event.target.value.replace(/\D/g, '');
-    if (valor.length > 11) valor = valor.slice(0, 11);
+  formatarTelefone(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    let valor = input.value.replace(/\D/g, '');
+    
+    if (valor.length > 11) {
+      valor = valor.slice(0, 11);
+    }
     
     if (valor.length > 2) {
-      valor = `(${valor.slice(0,2)}) ${valor.slice(2)}`;
+      valor = `(${valor.slice(0, 2)}) ${valor.slice(2)}`;
     }
+    
     if (valor.length > 10) {
-      valor = `${valor.slice(0,10)}-${valor.slice(10)}`;
+      valor = `${valor.slice(0, 10)}-${valor.slice(10)}`;
     }
     
     this.cadastroForm.patchValue({ telefone: valor });
