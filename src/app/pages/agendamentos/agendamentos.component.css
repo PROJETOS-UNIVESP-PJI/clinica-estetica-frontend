@@ -1,0 +1,44 @@
+/* Estilos específicos do componente de agendamentos */ 
+.horario-item {
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.horario-disponivel {
+  background-color: #e8f5e9;
+  border: 1px solid #c8e6c9;
+}
+
+.horario-disponivel:hover {
+  background-color: #c8e6c9;
+}
+
+.horario-ocupado {
+  background-color: #ffebee;
+  border: 1px solid #ffcdd2;
+  cursor: not-allowed;
+}
+
+.horario-ocupado:hover {
+  background-color: #ffcdd2;
+}
+
+.agendamento-detalhes {
+  margin-top: 5px;
+  font-size: 0.9em;
+  color: #666;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+}
+
+.btn-voltar {
+  margin-bottom: 20px;
+} 

@@ -99,10 +99,13 @@
               <textarea class="form-control" id="mensagem" rows="3" formControlName="mensagem"></textarea>
             </div>
 
-            <div class="d-grid">
+            <div class="d-flex justify-content-center gap-3">
               <button type="submit" class="btn btn-primary" [disabled]="!cadastroForm.valid">
-                Enviar
+                <i class="bi bi-calendar-check"></i> Agende sua consulta
               </button>
+              <a routerLink="/agendamentos" class="btn btn-outline-primary">
+                <i class="bi bi-calendar-week"></i> Ver Agendamentos
+              </a>
             </div>
           </form>
         </div>

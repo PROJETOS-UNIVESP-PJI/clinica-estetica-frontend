@@ -5,7 +5,14 @@
       <div class="col-lg-6">
         <h1 class="display-4 fw-bold mb-4">Transforme sua beleza natural</h1>
         <p class="lead mb-4">Descubra tratamentos personalizados que realçam sua beleza natural e restauram sua confiança.</p>
-        <a routerLink="/cadastro" class="btn btn-light btn-lg">Agende sua consulta</a>
+        <div class="text-center mt-4">
+          <a routerLink="/cadastro" class="btn btn-primary me-2">
+            <i class="bi bi-calendar-check"></i> Agende sua consulta
+          </a>
+          <a routerLink="/agendamentos" class="btn btn-outline-primary">
+            <i class="bi bi-calendar-week"></i> Ver Agendamentos
+          </a>
+        </div>
       </div>
       <div class="col-lg-6">
         <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
@@ -60,6 +67,13 @@
   <div class="container text-center">
     <h2 class="mb-4">Pronto para transformar sua beleza?</h2>
     <p class="lead mb-4">Agende sua consulta e descubra como podemos ajudar você a alcançar seus objetivos estéticos.</p>
-    <a routerLink="/cadastro" class="btn btn-primary btn-lg">Agende Agora</a>
+    <div class="d-flex justify-content-center gap-2">
+      <a routerLink="/cadastro" class="btn btn-primary btn-lg">
+        <i class="bi bi-calendar-check"></i> Agende Agora
+      </a>
+      <a routerLink="/agendamentos" class="btn btn-outline-primary btn-lg">
+        <i class="bi bi-calendar-week"></i> Ver Agendamentos
+      </a>
+    </div>
   </div>
 </section>

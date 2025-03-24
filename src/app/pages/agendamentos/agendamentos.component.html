@@ -1,0 +1,77 @@
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-12">
+      <button class="btn btn-outline-primary btn-voltar" routerLink="/">
+        <i class="bi bi-arrow-left"></i> Voltar
+      </button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <h2 class="mb-4">Agendamentos</h2>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="mb-4">
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Selecione a data</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="data" [min]="minDate" [max]="maxDate" [matDatepickerFilter]="isWorkday">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="form.get('data')?.hasError('required')">
+              Por favor, selecione uma data
+            </mat-error>
+            <mat-hint>Dias úteis: segunda a sexta</mat-hint>
+          </mat-form-field>
+        </div>
+
+        <button type="submit" class="btn btn-primary" [disabled]="!form.valid || isLoading">
+          <i class="bi bi-search"></i> Buscar Agendamentos
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div *ngIf="isLoading" class="text-center">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Carregando...</span>
+        </div>
+      </div>
+
+      <div *ngIf="!isLoading && dataSelecionada" class="mt-4">
+        <h3 class="mb-3">Horários do dia {{dataSelecionada | date:'dd/MM/yyyy'}}</h3>
+        <div class="row">
+          <div class="col-md-6" *ngFor="let horario of horarios">
+            <div class="horario-item" [ngClass]="{'horario-disponivel': !isHorarioOcupado(horario), 'horario-ocupado': isHorarioOcupado(horario)}">
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="fw-bold">{{horario}}</span>
+                <span *ngIf="isHorarioOcupado(horario)" class="badge bg-danger">Ocupado</span>
+                <span *ngIf="!isHorarioOcupado(horario)" class="badge bg-success">Disponível</span>
+              </div>
+              
+              <div *ngIf="isHorarioOcupado(horario)" class="agendamento-detalhes">
+                <div><strong>Nome:</strong> {{getAgendamentoPorHorario(horario)?.name}}</div>
+                <div><strong>Procedimento:</strong> {{getProcedureTypeLabel(getAgendamentoPorHorario(horario)?.procedureType || ProcedureType.LIMPEZA_PELE)}}</div>
+                <div><strong>Telefone:</strong> {{getAgendamentoPorHorario(horario)?.phone}}</div>
+                <div><strong>Email:</strong> {{getAgendamentoPorHorario(horario)?.email}}</div>
+                <div *ngIf="getAgendamentoPorHorario(horario)?.message">
+                  <strong>Mensagem:</strong> {{getAgendamentoPorHorario(horario)?.message}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="!isLoading && !dataSelecionada" class="alert alert-info">
+        Selecione uma data para visualizar os horários disponíveis.
+      </div>
+    </div>
+  </div>
+</div> 
