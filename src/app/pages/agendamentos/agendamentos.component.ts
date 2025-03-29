@@ -80,7 +80,7 @@ export class AgendamentosComponent implements OnInit {
   ) {
     this.maxDate = moment().add(30, 'days');
     
-    // Gerar horários das 9h às 18h
+    // Gerar horários base (9h às 18h)
     for (let hora = 9; hora <= 18; hora++) {
       this.horarios.push(`${hora.toString().padStart(2, '0')}:00`);
     }
@@ -125,8 +125,24 @@ export class AgendamentosComponent implements OnInit {
     }
   }
 
-  isHorarioOcupado(horario: string): boolean {
-    return this.horariosOcupados.includes(horario);
+  isHorarioDisponivel(horario: string): boolean {
+    if (!this.dataSelecionada) return false;
+    
+    const diaSemana = moment(this.dataSelecionada).day();
+    const hora = parseInt(horario.split(':')[0]);
+    
+    // Segunda-feira (1) - 13h às 18h
+    if (diaSemana === 1) {
+      return hora >= 13 && hora <= 18;
+    }
+    
+    // Terça a Sexta (2-5) - 9h às 18h
+    if (diaSemana >= 2 && diaSemana <= 5) {
+      return hora >= 9 && hora <= 18;
+    }
+    
+    // Sábado e Domingo (0, 6) - não disponível
+    return false;
   }
 
   getAgendamentoPorHorario(horario: string): Agendamento | undefined {
@@ -147,6 +163,7 @@ export class AgendamentosComponent implements OnInit {
   isWorkday: DateFilterFn<Moment | null> = (date: Moment | null): boolean => {
     if (!date) return false;
     const day = date.day();
+    // Permitir apenas segunda a sexta
     return day >= 1 && day <= 5;
   }
 } 

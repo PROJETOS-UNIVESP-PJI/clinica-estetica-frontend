@@ -120,7 +120,7 @@ export class CadastroInteressadosComponent implements OnInit {
   ) {
     this.maxDate = moment().add(30, 'days');
     
-    // Gerar horários das 9h às 18h
+    // Gerar horários base (9h às 18h)
     for (let hora = 9; hora <= 18; hora++) {
       this.horarios.push(`${hora.toString().padStart(2, '0')}:00`);
     }
@@ -163,10 +163,24 @@ export class CadastroInteressadosComponent implements OnInit {
             // Extrair apenas os horários dos objetos recebidos
             this.horariosOcupados = horariosOcupados.map((ocupado: any) => ocupado.scheduleHours);
             
-            // Filtrar horários disponíveis
-            this.horariosDisponiveis = this.horarios.filter(horario => 
-              !this.horariosOcupados.includes(horario)
-            );
+            // Filtrar horários disponíveis considerando o dia da semana
+            this.horariosDisponiveis = this.horarios.filter(horario => {
+              const diaSemana = data.day();
+              const hora = parseInt(horario.split(':')[0]);
+              
+              // Segunda-feira (1) - 13h às 18h
+              if (diaSemana === 1) {
+                return hora >= 13 && hora <= 18 && !this.horariosOcupados.includes(horario);
+              }
+              
+              // Terça a Sexta (2-5) - 9h às 18h
+              if (diaSemana >= 2 && diaSemana <= 5) {
+                return hora >= 9 && hora <= 18 && !this.horariosOcupados.includes(horario);
+              }
+              
+              // Sábado e Domingo (0, 6) - não disponível
+              return false;
+            });
             
             // Limpar o horário selecionado quando a data mudar
             this.cadastroForm.get('horarioPreferido')?.setValue('');
@@ -259,8 +273,7 @@ export class CadastroInteressadosComponent implements OnInit {
   isWorkday: DateFilterFn<Moment | null> = (date: Moment | null): boolean => {
     if (!date) return false;
     const day = date.day();
-    // Retorna true para segunda (1) a sexta (5), permitindo a seleção
-    // Retorna false para sábado (6) e domingo (0), desabilitando esses dias
+    // Permitir apenas segunda a sexta
     return day >= 1 && day <= 5;
   }
 
@@ -286,6 +299,22 @@ export class CadastroInteressadosComponent implements OnInit {
 
   // Método para verificar se um horário está disponível
   isHorarioDisponivel(horario: string): boolean {
-    return !this.horariosOcupados.includes(horario);
+    if (!this.cadastroForm.get('dataPreferida')?.value) return false;
+    
+    const diaSemana = moment(this.cadastroForm.get('dataPreferida')?.value).day();
+    const hora = parseInt(horario.split(':')[0]);
+    
+    // Segunda-feira (1) - 13h às 18h
+    if (diaSemana === 1) {
+      return hora >= 13 && hora <= 18;
+    }
+    
+    // Terça a Sexta (2-5) - 9h às 18h
+    if (diaSemana >= 2 && diaSemana <= 5) {
+      return hora >= 9 && hora <= 18;
+    }
+    
+    // Sábado e Domingo (0, 6) - não disponível
+    return false;
   }
 }
