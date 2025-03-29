@@ -74,35 +74,121 @@ interface HorarioOcupado {
 export class CadastroInteressadosComponent implements OnInit {
   cadastroForm!: FormGroup;
   servicos: Servico[] = [
+    // Serviços Faciais
     {
       titulo: 'Limpeza de Pele',
       descricao: 'Limpeza de pele profissional',
-      imagem: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
+      imagem: 'assets/images/limpeza-pele.jpg',
       enumValue: ProcedureType.LIMPEZA_PELE
     },
     {
       titulo: 'Botox',
       descricao: 'Toxina botulínica para rugas',
-      imagem: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
+      imagem: 'assets/images/botox.jpg',
       enumValue: ProcedureType.BOTOX
     },
     {
-      titulo: 'Preenchimento',
-      descricao: 'Preenchimento facial com ácido hialurônico',
-      imagem: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
-      enumValue: ProcedureType.PREENCHIMENTO
+      titulo: 'Laser para Clareamento de Manchas',
+      descricao: 'Tratamento a laser para clareamento de manchas',
+      imagem: 'assets/images/laser-clareamento.jpg',
+      enumValue: ProcedureType.LASER_CLAREAMENTO
     },
+    {
+      titulo: 'Jato de Plasma',
+      descricao: 'Tratamento com jato de plasma',
+      imagem: 'assets/images/jato-plasma.jpg',
+      enumValue: ProcedureType.JATO_PLASMA
+    },
+    {
+      titulo: 'Peelings',
+      descricao: 'Tratamentos com peelings',
+      imagem: 'assets/images/peeling.jpg',
+      enumValue: ProcedureType.PEELING
+    },
+    {
+      titulo: 'Microagulhamento',
+      descricao: 'Tratamento com microagulhamento',
+      imagem: 'assets/images/microagulhamento.jpg',
+      enumValue: ProcedureType.MICROAGULHAMENTO
+    },
+    {
+      titulo: 'Revitalização Facial',
+      descricao: 'Tratamento de revitalização facial',
+      imagem: 'assets/images/revitalizacao.jpg',
+      enumValue: ProcedureType.REVITALIZACAO_FACIAL
+    },
+    // Serviços Corporais
     {
       titulo: 'Depilação a Laser',
       descricao: 'Depilação a laser',
-      imagem: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
+      imagem: 'assets/images/depilacao-laser.jpg',
       enumValue: ProcedureType.DEPILACAO_LASER
     },
     {
-      titulo: 'Tratamento Capilar',
-      descricao: 'Tratamentos para queda de cabelo',
-      imagem: 'https://images.unsplash.com/photo-1522338242992-e1a54906a8da?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
-      enumValue: ProcedureType.TRATAMENTO_CAPILAR
+      titulo: 'Massagem Relaxante',
+      descricao: 'Massagem relaxante',
+      imagem: 'assets/images/massagem-relaxante.jpg',
+      enumValue: ProcedureType.MASSAGEM_RELAXANTE
+    },
+    {
+      titulo: 'Massagem Modeladora',
+      descricao: 'Massagem modeladora',
+      imagem: 'assets/images/massagem-modeladora.jpg',
+      enumValue: ProcedureType.MASSAGEM_RELAXANTE
+    },
+    {
+      titulo: 'Drenagem Linfática',
+      descricao: 'Drenagem linfática',
+      imagem: 'assets/images/drenagem-linfatica.jpg',
+      enumValue: ProcedureType.DRENAGEM_LINFATICA
+    },
+    {
+      titulo: 'Ventosaterapia',
+      descricao: 'Tratamento com ventosas',
+      imagem: 'assets/images/ventosaterapia.jpg',
+      enumValue: ProcedureType.VENTOSSATERAPIA
+    },
+    {
+      titulo: 'Acupuntura e Auriculoterapia',
+      descricao: 'Tratamento com acupuntura e auriculoterapia',
+      imagem: 'assets/images/acupuntura.jpg',
+      enumValue: ProcedureType.ACUPUNTURA
+    },
+    {
+      titulo: 'Aplicação de Tapping',
+      descricao: 'Tratamento com tapping',
+      imagem: 'assets/images/tapping.jpg',
+      enumValue: ProcedureType.TAPPING
+    },
+    {
+      titulo: 'Laserterapia',
+      descricao: 'Tratamento com laserterapia',
+      imagem: 'assets/images/laserterapia.jpg',
+      enumValue: ProcedureType.LASERTERAPIA
+    },
+    {
+      titulo: 'Ozonioterapia',
+      descricao: 'Tratamento com ozonioterapia',
+      imagem: 'assets/images/ozonioterapia.jpg',
+      enumValue: ProcedureType.OZONIOTERAPIA
+    },
+    {
+      titulo: 'Tratamento para Gordura Localizada',
+      descricao: 'Tratamento para gordura localizada',
+      imagem: 'assets/images/gordura-localizada.jpg',
+      enumValue: ProcedureType.TRATAMENTO_GORDURA
+    },
+    {
+      titulo: 'Tratamento para Celulite',
+      descricao: 'Tratamento para celulite',
+      imagem: 'assets/images/celulite.jpg',
+      enumValue: ProcedureType.TRATAMENTO_CELULITE
+    },
+    {
+      titulo: 'Pós Operatório de Cirurgia Plástica',
+      descricao: 'Tratamento pós operatório de cirurgia plástica',
+      imagem: 'assets/images/pos-operatorio.jpg',
+      enumValue: ProcedureType.POS_OPERATORIO
     }
   ];
   horarios: string[] = [];

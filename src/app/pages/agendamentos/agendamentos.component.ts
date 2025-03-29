@@ -163,9 +163,22 @@ export class AgendamentosComponent implements OnInit {
     const labels: Record<ProcedureType, string> = {
       LIMPEZA_PELE: 'Limpeza de Pele',
       BOTOX: 'Botox',
-      PREENCHIMENTO: 'Preenchimento',
+      LASER_CLAREAMENTO: 'Laser para Clareamento de Manchas',
+      JATO_PLASMA: 'Jato de Plasma',
+      PEELING: 'Peelings',
+      MICROAGULHAMENTO: 'Microagulhamento',
+      REVITALIZACAO_FACIAL: 'Revitalização Facial',
       DEPILACAO_LASER: 'Depilação a Laser',
-      TRATAMENTO_CAPILAR: 'Tratamento Capilar'
+      MASSAGEM_RELAXANTE: 'Massagem Relaxante',
+      DRENAGEM_LINFATICA: 'Drenagem Linfática',
+      VENTOSSATERAPIA: 'Ventosaterapia',
+      ACUPUNTURA: 'Acupuntura e Auriculoterapia',
+      TAPPING: 'Aplicação de Tapping',
+      LASERTERAPIA: 'Laserterapia',
+      OZONIOTERAPIA: 'Ozonioterapia',
+      TRATAMENTO_GORDURA: 'Tratamento para Gordura Localizada',
+      TRATAMENTO_CELULITE: 'Tratamento para Celulite',
+      POS_OPERATORIO: 'Pós Operatório de Cirurgia Plástica'
     };
     return labels[type] || type;
   }
