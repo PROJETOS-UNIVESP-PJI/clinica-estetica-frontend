@@ -2,6 +2,11 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
+interface CategoriaServico {
+  titulo: string;
+  servicos: string[];
+}
+
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -10,6 +15,38 @@ import { RouterLink } from '@angular/router';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
+  categorias: CategoriaServico[] = [
+    {
+      titulo: 'Serviços Faciais',
+      servicos: [
+        'Limpeza de pele',
+        'Botox',
+        'Laser para Clareamento de manchas',
+        'Jato de plasma',
+        'Peelings',
+        'Microagulhamento',
+        'Revitalização Facial'
+      ]
+    },
+    {
+      titulo: 'Serviços Corporais',
+      servicos: [
+        'Depilação a laser',
+        'Massagem Relaxante',
+        'Massagem Modeladora',
+        'Drenagem Linfática',
+        'Ventosaterapia',
+        'Acupuntura e Auriculoterapia',
+        'Aplicação de Tapping',
+        'Laserterapia',
+        'Ozonioterapia',
+        'Tratamento para gordura localizada',
+        'Tratamento para celulite',
+        'Pós Operatório de cirurgia plástica'
+      ]
+    }
+  ];
+
   servicos = [
     {
       titulo: 'Limpeza de Pele',

@@ -15,6 +15,7 @@
 
 .card {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 15px;
 }
 
 .card:hover {
@@ -57,6 +58,25 @@ h1, h2 {
 .lead {
   font-size: 1.25rem;
   font-weight: 300;
+}
+
+.card-title {
+  color: #333;
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+.list-unstyled li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.list-unstyled li:last-child {
+  border-bottom: none;
+}
+
+.bi-check-circle-fill {
+  font-size: 1.2rem;
 }
 
 

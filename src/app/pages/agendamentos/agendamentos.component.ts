@@ -131,18 +131,28 @@ export class AgendamentosComponent implements OnInit {
     const diaSemana = moment(this.dataSelecionada).day();
     const hora = parseInt(horario.split(':')[0]);
     
+    // Verificar se o horário está dentro do horário de funcionamento
+    let horarioValido = false;
+    
     // Segunda-feira (1) - 13h às 18h
     if (diaSemana === 1) {
-      return hora >= 13 && hora <= 18;
+      horarioValido = hora >= 13 && hora <= 18;
     }
     
     // Terça a Sexta (2-5) - 9h às 18h
     if (diaSemana >= 2 && diaSemana <= 5) {
-      return hora >= 9 && hora <= 18;
+      horarioValido = hora >= 9 && hora <= 18;
     }
     
-    // Sábado e Domingo (0, 6) - não disponível
-    return false;
+    // Se o horário não está dentro do horário de funcionamento, retorna false
+    if (!horarioValido) return false;
+    
+    // Verificar se o horário está ocupado
+    return !this.horariosOcupados.includes(horario);
+  }
+
+  isHorarioOcupado(horario: string): boolean {
+    return this.horariosOcupados.includes(horario);
   }
 
   getAgendamentoPorHorario(horario: string): Agendamento | undefined {

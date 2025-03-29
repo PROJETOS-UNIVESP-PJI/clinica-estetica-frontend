@@ -48,14 +48,14 @@
         <h3 class="mb-3">Horários do dia {{dataSelecionada | date:'dd/MM/yyyy'}}</h3>
         <div class="row">
           <div class="col-md-6" *ngFor="let horario of horarios">
-            <div class="horario-item" [ngClass]="{'horario-disponivel': isHorarioDisponivel(horario), 'horario-ocupado': !isHorarioDisponivel(horario)}">
+            <div class="horario-item" [ngClass]="{'horario-disponivel': isHorarioDisponivel(horario), 'horario-ocupado': isHorarioOcupado(horario)}">
               <div class="d-flex justify-content-between align-items-center">
                 <span class="fw-bold">{{horario}}</span>
-                <span *ngIf="!isHorarioDisponivel(horario)" class="badge bg-danger">Indisponível</span>
+                <span *ngIf="isHorarioOcupado(horario)" class="badge bg-danger">Ocupado</span>
                 <span *ngIf="isHorarioDisponivel(horario)" class="badge bg-success">Disponível</span>
               </div>
               
-              <div *ngIf="!isHorarioDisponivel(horario)" class="agendamento-detalhes">
+              <div *ngIf="isHorarioOcupado(horario)" class="agendamento-detalhes">
                 <div><strong>Nome:</strong> {{getAgendamentoPorHorario(horario)?.name}}</div>
                 <div><strong>Procedimento:</strong> {{getProcedureTypeLabel(getAgendamentoPorHorario(horario)?.procedureType || ProcedureType.LIMPEZA_PELE)}}</div>
                 <div><strong>Telefone:</strong> {{getAgendamentoPorHorario(horario)?.phone}}</div>

@@ -26,14 +26,28 @@
 <!-- Serviços Section -->
 <section class="py-5">
   <div class="container">
-    <h2 class="text-center mb-5">Nossos Serviços</h2>
+    <div class="text-center mb-5">
+      <h2 class="text-center mb-5">Nossos Serviços</h2>
+      <p class="lead">Conheça nossa variedade de tratamentos estéticos e terapêuticos</p>
+    </div>
+
     <div class="row g-4">
-      <div class="col-md-4" *ngFor="let servico of servicos">
-        <div class="card h-100 shadow-sm">
-          <img [src]="servico.imagem" class="card-img-top" [alt]="servico.titulo">
+      <div class="col-md-6" *ngFor="let categoria of categorias">
+        <div class="card h-100 border-0 shadow-sm">
           <div class="card-body">
-            <h5 class="card-title">{{servico.titulo}}</h5>
-            <p class="card-text">{{servico.descricao}}</p>
+            <h3 class="card-title text-center mb-4">{{categoria.titulo}}</h3>
+            <div class="row">
+              <div class="col-12">
+                <ul class="list-unstyled">
+                  <li *ngFor="let servico of categoria.servicos" class="mb-3">
+                    <div class="d-flex align-items-center">
+                      <i class="bi bi-check-circle-fill text-primary me-2"></i>
+                      <span>{{servico}}</span>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </div>
