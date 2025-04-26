@@ -37,8 +37,7 @@
             ],
             "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
-            ],
-            "baseHref": "/clinica-estetica-frontend/"
+            ]
           },
           "configurations": {
             "production": {
@@ -103,12 +102,6 @@
             "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
             ]
-          }
-        },
-        "deploy": {
-          "builder": "angular-cli-ghpages:deploy",
-          "options": {
-            "baseHref": "/clinica-estetica-frontend/"
           }
         }
       }
