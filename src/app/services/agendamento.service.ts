@@ -61,7 +61,7 @@ export interface Agendamento {
   providedIn: 'root'
 })
 export class AgendamentoService {
-  private apiUrl = 'https://sleepy-everglades-97802-cdc3033e6535.herokuapp.com/';
+  private apiUrl = 'https://sleepy-everglades-97802-cdc3033e6535.herokuapp.com';
 
   constructor(private http: HttpClient) { }
 
